@@ -9,6 +9,8 @@ class Inventory extends Model
 {
     use SoftDeletes;
 
+    protected $fillable = ['film_id'];
+
     public function film() {
         return $this->belongsTo(Film::class);
     }
