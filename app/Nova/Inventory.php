@@ -5,6 +5,7 @@ namespace App\Nova;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\BelongsToMany;
+use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
@@ -47,6 +48,11 @@ class Inventory extends Resource
             ID::make()->sortable(),
 
             BelongsTo::make('Film'),
+
+            // (cool) computed fields
+            Boolean::make('Rental Available', function() {
+                return !(boolean)$this->activeRental();
+            }),
 
             // (display name, relationship method name, target class)
             BelongsToMany::make('Rentals', 'rentals', User::class)

@@ -21,7 +21,7 @@ class RentalsTableSeeder extends Seeder
                 4
             )
         );
-        // JANET: Do I need to be handling this date manually?
+        // (janet) Do I need to be handling this date manually?
         $user->rentals()->attach($inventory_ids, [
             'rental_date' => \Carbon\Carbon::now()->toDateTimeString(),
             'return_date' => \Carbon\Carbon::now()->addDays(7)->toDateTimeString(),

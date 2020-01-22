@@ -3,6 +3,7 @@
 namespace App\Nova;
 
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Number;
@@ -60,6 +61,11 @@ class Film extends Resource
             Number::make('Length (minutes)', 'length')
                 ->sortable()
                 ->min(5)->max(240),
+
+            // (cool) computed fields
+            Number::make('Rentals Available', function() {
+                return count($this->availableRentals()->toArray());
+            }),
 
             HasMany::make('Inventories'),
         ];

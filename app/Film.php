@@ -23,7 +23,7 @@ class Film extends Model
     }
 
     public function addInventory($amount = 1) {
-        // JANET: better way to do this?
+        // (janet) better way to do this?
         return $this->inventories()->saveMany(array_map(
             function () {
                 return new Inventory();
