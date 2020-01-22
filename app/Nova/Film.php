@@ -36,6 +36,12 @@ class Film extends Resource
         'title'
     ];
 
+    public function subtitle()
+    {
+        $availableRentals = count($this->availableRentals()->toArray());
+        return "Rentals Available: {$availableRentals}";
+    }
+
     /**
      * Get the fields displayed by the resource.
      *
@@ -90,7 +96,9 @@ class Film extends Resource
      */
     public function filters(Request $request)
     {
-        return [];
+        return [
+            new Filters\FilmLength()
+        ];
     }
 
     /**
