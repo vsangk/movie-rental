@@ -38,9 +38,10 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    // JANET: how can I reduce this withPivot duplication
     public function rentals() {
         return $this->belongsToMany(Inventory::class, 'rentals')
-            ->as('rentals')
-            ->withTimestamps();
+            ->using(Rental::class)
+            ->withPivot('rental_date', 'return_date');
     }
 }

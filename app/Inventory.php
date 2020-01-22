@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -16,8 +17,8 @@ class Inventory extends Model
     }
 
     public function rentals() {
-        return $this->belongsToMany(Inventory::class, 'rentals')
-            ->as('rentals')
-            ->withTimestamps();
+        return $this->belongsToMany(User::class, 'rentals')
+            ->using(Rental::class)
+            ->withPivot('rental_date', 'return_date');
     }
 }
