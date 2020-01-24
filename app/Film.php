@@ -22,6 +22,10 @@ class Film extends Model
         return $this->hasMany(Inventory::class);
     }
 
+    public function reviews() {
+        return $this->hasMany(Review::class);
+    }
+
     public function addInventory($amount = 1) {
         // (janet) better way to do this?
         return $this->inventories()->saveMany(array_map(
@@ -37,7 +41,7 @@ class Film extends Model
     }
 
     public function availableRentals() {
-        // TODO: clean up this horrible horrible mess
+        // TODO: clean this up
         $inventoryWithRentals = $this->inventories()->with('rentals')->get();
 
         return $inventoryWithRentals

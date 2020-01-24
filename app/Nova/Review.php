@@ -2,31 +2,28 @@
 
 namespace App\Nova;
 
-use App\Nova\Actions\AddInventory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Http\Request;
-use Laravel\Nova\Fields\Boolean;
-use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class Film extends Resource
+class Review extends Resource
 {
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = 'App\Film';
+    public static $model = 'App\Review';
 
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
      */
-    public static $title = 'title';
+    public static $title = 'id';
 
     /**
      * The columns that should be searched.
@@ -34,14 +31,8 @@ class Film extends Resource
      * @var array
      */
     public static $search = [
-        'title'
+        'id',
     ];
-
-    public function subtitle()
-    {
-        $availableRentals = count($this->availableRentals()->toArray());
-        return "Rentals Available: {$availableRentals}";
-    }
 
     /**
      * Get the fields displayed by the resource.
@@ -54,29 +45,11 @@ class Film extends Resource
         return [
             ID::make()->sortable(),
 
-            Text::make('Title')
-                ->sortable()
-                ->rules('required', 'max:255'),
+            Number::make('Rating'),
 
-            Textarea::make('Description')
-                ->sortable(),
+            Text::make('Comment'),
 
-            Number::make('Release Year')
-                ->sortable()
-                ->min(1850)->max((int)date('Y')),
-
-            Number::make('Length (minutes)', 'length')
-                ->sortable()
-                ->min(5)->max(240),
-
-            // (cool) computed fields
-            Number::make('Rentals Available', function() {
-                return count($this->availableRentals()->toArray());
-            }),
-
-            HasMany::make('Reviews'),
-
-            HasMany::make('Inventories'),
+            \Laravel\Nova\Fields\BelongsTo::make('Film'),
         ];
     }
 
@@ -99,9 +72,7 @@ class Film extends Resource
      */
     public function filters(Request $request)
     {
-        return [
-            new Filters\FilmLength()
-        ];
+        return [];
     }
 
     /**
@@ -123,8 +94,6 @@ class Film extends Resource
      */
     public function actions(Request $request)
     {
-        return [
-            new AddInventory()
-        ];
+        return [];
     }
 }

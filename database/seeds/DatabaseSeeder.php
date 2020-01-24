@@ -15,7 +15,8 @@ class DatabaseSeeder extends Seeder
              UsersTableSeeder::class,
              FilmsTableSeeder::class,
              InventoriesTableSeeder::class,
-             RentalsTableSeeder::class
+             RentalsTableSeeder::class,
+             ReviewSeeder::class,
          ]);
     }
 }
