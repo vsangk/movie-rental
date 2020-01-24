@@ -55,7 +55,7 @@ class Inventory extends Resource
             }),
 
             // (display name, relationship method name, target class)
-            BelongsToMany::make('Rentals', 'rentals', User::class)
+            BelongsToMany::make('Rentals', 'rentals', User::class)->fields(new RentalFields())
         ];
     }
 

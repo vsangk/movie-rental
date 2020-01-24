@@ -17,7 +17,7 @@ class CreateRentalsTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('inventory_id');
             $table->unsignedBigInteger('user_id');
-            $table->timestamp('rental_date')->nullable();
+            $table->timestamp('rental_date')->useCurrent();
             $table->timestamp('return_date')->nullable();
 
             $table->foreign('inventory_id')->references('id')->on('inventories');

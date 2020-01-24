@@ -23,9 +23,9 @@ class Inventory extends Model
     }
 
     public function activeRental() {
-        $latestRental = $this->rentals->pluck('pivot')->sortBy('rental_date')->first();
+        $latestRental = $this->rentals->pluck('pivot')->sortByDesc('rental_date')->first();
 
-        if ($latestRental && $latestRental->return_date < Carbon::now()->toDateString()) {
+        if ($latestRental && $latestRental->return_date > Carbon::now()->toDateString()) {
             return $latestRental;
         }
 

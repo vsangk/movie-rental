@@ -63,7 +63,7 @@ class User extends Resource
                 ->updateRules('nullable', 'string', 'min:8'),
 
             // (display name, relationship method name, target class)
-            BelongsToMany::make('Rentals', 'rentals', Inventory::class)
+            BelongsToMany::make('Rentals', 'rentals', Inventory::class)->fields(new RentalFields())
         ];
     }
 
