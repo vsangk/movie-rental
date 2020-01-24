@@ -2,6 +2,7 @@
 
 namespace App\Nova;
 
+use App\Nova\Actions\AddInventory;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\HasMany;
@@ -120,6 +121,8 @@ class Film extends Resource
      */
     public function actions(Request $request)
     {
-        return [];
+        return [
+            new AddInventory()
+        ];
     }
 }
