@@ -12,3 +12,5 @@ npm-debug.log
 yarn-error.log
 .idea
 movie-rental.iml
+.DS_Store
+auth.json

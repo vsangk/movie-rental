@@ -57,11 +57,6 @@ class User extends Resource
                 ->creationRules('unique:users,email')
                 ->updateRules('unique:users,email,{{resourceId}}'),
 
-            Password::make('Password')
-                ->onlyOnForms()
-                ->creationRules('required', 'string', 'min:8')
-                ->updateRules('nullable', 'string', 'min:8'),
-
             // (display name, relationship method name, target class)
             BelongsToMany::make('Rentals', 'rentals', Inventory::class)->fields(new RentalFields())
         ];
