@@ -45,9 +45,10 @@ class FilmController extends Controller
      * @param  \App\Film  $film
      * @return \Illuminate\Http\JsonResponse
      */
-    public function show(Film $film)
+    public function show($film)
     {
-        return response()->json($film);
+        $filmWithComments = Film::where('id', 1)->with('reviews')->get();
+        return response()->json($filmWithComments);
     }
 
     /**

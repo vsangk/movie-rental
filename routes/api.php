@@ -18,7 +18,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::resource('films', 'FilmController')->middleware('jwt');
+// TODO: turn jwt middleware back on after audience issue is solved
+//Route::resource('films', 'FilmController')->middleware('jwt');
+Route::resource('films', 'FilmController');
 Route::get('films/{film}/inventories', 'InventoryController@index');
 Route::post('films/{film}/inventories', 'InventoryController@store');
 Route::delete('films/{film}/inventories/{inventory}', 'InventoryController@destroy');

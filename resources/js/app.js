@@ -1,14 +1,18 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import { Auth0Plugin } from "./auth";
-import Profile from './components/Profile'
-import ExternalApi from './components/ExternalApi'
+import App from './components/App';
+import Profile from './components/Profile';
+import ExternalApi from './components/ExternalApi';
+import FilmDetail from "./components/FilmDetail";
+import { authGuard } from "./auth/authGuard";
 import { domain, clientId } from "../../auth_config";
 
 // Register all Vue components
 const files = require.context('./', true, /\.vue$/i);
 files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
 
+const Home = { template: '<h1>Home</h1>' };
 const NotFoundComponent = { template: '<h1>404 - Not Found</h1>' };
 
 // Register plugins
@@ -27,12 +31,14 @@ Vue.use(Auth0Plugin, {
 });
 Vue.config.productionTip = false;
 
-import App from './components/App';
-import {authGuard} from "./auth/authGuard";
-
 const router = new VueRouter({
     mode: 'history',
     routes: [
+        {
+            path: '/',
+            name: 'Home',
+            component: Home,
+        },
         {
             path: '/profile',
             name: 'profile',
@@ -40,16 +46,21 @@ const router = new VueRouter({
             beforeEnter: authGuard
         },
         {
-            path: '*',
-            name: 'not-found',
-            component: NotFoundComponent
-        },
-        {
             path: "/external-api",
             name: "external-api",
             component: ExternalApi,
             beforeEnter: authGuard
-        }
+        },
+        {
+            path: "/film-detail",
+            name: "film-detail",
+            component: FilmDetail,
+        },
+        {
+            path: '*',
+            name: 'not-found',
+            component: NotFoundComponent
+        },
     ],
 });
 
