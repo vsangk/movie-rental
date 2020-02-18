@@ -2,6 +2,7 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import { Auth0Plugin } from "./auth";
 import Profile from './components/Profile'
+import ExternalApi from './components/ExternalApi'
 import { domain, clientId } from "../../auth_config";
 
 // Register all Vue components
@@ -15,6 +16,7 @@ Vue.use(VueRouter);
 Vue.use(Auth0Plugin, {
     domain,
     clientId,
+    audience: 'https://api.movie-rental.com',
     onRedirectCallback: appState => {
         router.push(
             appState && appState.targetUrl
@@ -41,6 +43,12 @@ const router = new VueRouter({
             path: '*',
             name: 'not-found',
             component: NotFoundComponent
+        },
+        {
+            path: "/external-api",
+            name: "external-api",
+            component: ExternalApi,
+            beforeEnter: authGuard
         }
     ],
 });
