@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\TestEvent;
 use App\Review;
 use Illuminate\Http\Request;
 
@@ -31,6 +32,8 @@ class ReviewController extends Controller
             'rating' => $request->rating,
             'comment' => $request->comment
         ]);
+
+        event(new TestEvent('blah blah'));
 
         return response()->json([
             'status' => (bool)$review,

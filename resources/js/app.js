@@ -5,6 +5,7 @@ import App from './components/App';
 import Profile from './components/Profile';
 import ExternalApi from './components/ExternalApi';
 import FilmDetail from "./components/FilmDetail";
+import EchoTest from "./components/EchoTest";
 import { authGuard } from "./auth/authGuard";
 import { domain, clientId } from "../../auth_config";
 
@@ -46,12 +47,6 @@ const router = new VueRouter({
             beforeEnter: authGuard
         },
         {
-            path: "/external-api",
-            name: "external-api",
-            component: ExternalApi,
-            beforeEnter: authGuard
-        },
-        {
             path: "/film-detail",
             name: "film-detail",
             component: FilmDetail,
@@ -60,6 +55,18 @@ const router = new VueRouter({
             path: '*',
             name: 'not-found',
             component: NotFoundComponent
+        },
+        // REMOVE THESE
+        {
+            path: "/external-api",
+            name: "external-api",
+            component: ExternalApi,
+            beforeEnter: authGuard
+        },
+        {
+            path: "/echo-test",
+            name: "echo-test",
+            component: EchoTest,
         },
     ],
 });
