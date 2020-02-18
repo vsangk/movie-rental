@@ -10,32 +10,33 @@ class ReviewController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function index()
+    public function index($film)
     {
-        //
+        return response()->json(Review::where('film_id', $film)->get()->toArray());
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function store(Request $request)
+    public function store(Request $request, $film)
     {
-        //
+        $review = Review::create([
+            'film_id' => $film,
+            'rating' => $request->rating,
+            'comment' => $request->comment
+        ]);
+
+        return response()->json([
+            'status' => (bool)$review,
+            'data' => $review,
+            'message' => $review ? 'Inventory Created' : 'Error creating inventory'
+        ]);
     }
 
     /**
@@ -45,17 +46,6 @@ class ReviewController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show(Review $review)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Review  $review
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Review $review)
     {
         //
     }
@@ -76,10 +66,15 @@ class ReviewController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  \App\Review  $review
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function destroy(Review $review)
+    public function destroy($review)
     {
-        //
+        $reviewToDelete = Review::where('id', $review);
+        $status = $reviewToDelete->delete();
+        return response()->json([
+            'status' => $status,
+            'message' => $status ? 'Review Deleted!' : 'Error Deleting Review'
+        ]);
     }
 }

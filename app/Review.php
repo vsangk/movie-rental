@@ -9,11 +9,11 @@ class Review extends Model
 {
     use SoftDeletes;
 
-//    protected $fillable = [
-//        'film_id',
-//        'rating',
-//        'comment'
-//    ];
+    protected $fillable = [
+        'film_id',
+        'rating',
+        'comment'
+    ];
 
     public function film() {
         return $this->belongsTo(Film::class);

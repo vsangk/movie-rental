@@ -22,3 +22,6 @@ Route::resource('films', 'FilmController')->middleware('jwt');
 Route::get('films/{film}/inventories', 'InventoryController@index');
 Route::post('films/{film}/inventories', 'InventoryController@store');
 Route::delete('films/{film}/inventories/{inventory}', 'InventoryController@destroy');
+Route::get('films/{film}/reviews', 'ReviewController@index');
+Route::post('films/{film}/reviews', 'ReviewController@store');
+Route::delete('films/{film}/reviews/{review}', 'ReviewController@destroy');
